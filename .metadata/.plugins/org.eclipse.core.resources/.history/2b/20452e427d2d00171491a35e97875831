@@ -127,10 +127,10 @@ public class SWMenu extends JFrame implements ActionListener
 		//Menu option forms
 		
 		// add product form.
-	/*	add = new Add_Product(stockItems); // pass stock #map to add form
+		add = new Add_Product(stockItems); // pass stock #map to add form
 		add.setTitle("Add Student");
 		add.setSize(500,450);
-		add.setLocation(100,100);*/
+		add.setLocation(100,100);
 	}
 
 	
@@ -138,7 +138,7 @@ public class SWMenu extends JFrame implements ActionListener
 	{
 		if(e.getSource() == addProd)
 		{
-			add.setVisible(true);
+			
 		}
 		
 		if(e.getSource() == editProd)

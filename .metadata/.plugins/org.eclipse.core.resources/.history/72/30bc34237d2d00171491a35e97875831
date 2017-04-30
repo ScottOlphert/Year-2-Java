@@ -15,7 +15,6 @@ public class SWMenu extends JFrame implements ActionListener
 	private Container cn;
 	private JLabel pic;
 	private ImageIcon logo = new ImageIcon("resource/logo.jpg"); // create logo for program
-	private Add_Product add; // add product form
 	
 	Font sml = new Font("Arial", Font.BOLD,16); // create fonts used on the menu form
 	Font lrg = new Font("Arial", Font.BOLD,18);
@@ -123,14 +122,6 @@ public class SWMenu extends JFrame implements ActionListener
 		
 		ReadStock();
 		ReadSales();
-		
-		//Menu option forms
-		
-		// add product form.
-	/*	add = new Add_Product(stockItems); // pass stock #map to add form
-		add.setTitle("Add Student");
-		add.setSize(500,450);
-		add.setLocation(100,100);*/
 	}
 
 	
@@ -138,7 +129,7 @@ public class SWMenu extends JFrame implements ActionListener
 	{
 		if(e.getSource() == addProd)
 		{
-			add.setVisible(true);
+			
 		}
 		
 		if(e.getSource() == editProd)
@@ -191,15 +182,15 @@ public class SWMenu extends JFrame implements ActionListener
 		}
 		catch(ClassNotFoundException cEx)
 		{
-			JOptionPane.showMessageDialog(null, "The contents of Stock.dat could not be read");
+			JOptionPane.showMessageDialog(null, "The contents could not be read");
 		}
 		catch(FileNotFoundException fEx)
 		{
-			JOptionPane.showMessageDialog(null, "Stock.dat: File not found");
+			JOptionPane.showMessageDialog(null, "File not found");
 		}
 		catch(IOException ioEx)
 		{
-			JOptionPane.showMessageDialog(null, "Could not read from Stock.dat");
+			JOptionPane.showMessageDialog(null, "Could not read from file");
 		}
 	}
 	
@@ -214,15 +205,15 @@ public class SWMenu extends JFrame implements ActionListener
 		}
 		catch(ClassNotFoundException cEx)
 		{
-			JOptionPane.showMessageDialog(null, "The contents of Sales.dat could not be read");
+			JOptionPane.showMessageDialog(null, "The contents could not be read");
 		}
 		catch(FileNotFoundException fEx)
 		{
-			JOptionPane.showMessageDialog(null, "Sales.dat: File not found");
+			JOptionPane.showMessageDialog(null, "File not found");
 		}
 		catch(IOException ioEx)
 		{
-			JOptionPane.showMessageDialog(null, "Could not read from Sales.dat");
+			JOptionPane.showMessageDialog(null, "Could not read from file");
 		}
 	}
 	
@@ -238,11 +229,11 @@ public class SWMenu extends JFrame implements ActionListener
 		
 		catch(FileNotFoundException fEx)
 		{
-			JOptionPane.showMessageDialog(null, "Stock.dat: File not found");
+			JOptionPane.showMessageDialog(null, "File not found");
 		}
 		catch(IOException ioEx)
 		{
-			JOptionPane.showMessageDialog(null, "Could not write to Stock.dat");
+			JOptionPane.showMessageDialog(null, "Could not write file");
 		}
 	}
 	
@@ -258,11 +249,11 @@ public class SWMenu extends JFrame implements ActionListener
 		
 		catch(FileNotFoundException fEx)
 		{
-			JOptionPane.showMessageDialog(null, "Sales.dat: File not found");
+			JOptionPane.showMessageDialog(null, "File not found");
 		}
 		catch(IOException ioEx)
 		{
-			JOptionPane.showMessageDialog(null, "Could not write to Sales.dat");
+			JOptionPane.showMessageDialog(null, "Could not write file");
 		}
 	}
 

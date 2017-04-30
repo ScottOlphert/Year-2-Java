@@ -46,20 +46,9 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		p5 = new JPanel(new GridBagLayout());
 		p5.setBackground(Color.decode("#8F0B23"));
 
-		
-		/*this.productID = productID;
-		this.name = name;
-		this.colour = colour;
-		this.reigon = reigon;
-		this.country = country;
-		this.grape = grape;
-		this.noSold = noSold;
-		this.stockLevel = stockLevel;
-		this.cost = cost;
-		this.sellingPrice = sellingPrice;*/
 
 
-		lblTitle = new JLabel("<html><u>--Add Product--</u></html>",JLabel.CENTER); // create labels used throughout the addRequest GUI
+		lblTitle = new JLabel("<html><u>--Submit Request--</u></html>",JLabel.CENTER); // create labels used throughout the addRequest GUI
 		lblTitle.setFont(new Font("Arial",Font.BOLD,20));
 		lblTitle.setForeground(Color.white);
 		lblName = new JLabel("Name:",JLabel.LEFT);
@@ -81,7 +70,7 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 
 
 		name = new JTextField(); // text fields created
-		//grape = new JTextField();
+		email = new JTextField();
 		telNo = new JTextField();
 
 		red = new JRadioButton("Red");

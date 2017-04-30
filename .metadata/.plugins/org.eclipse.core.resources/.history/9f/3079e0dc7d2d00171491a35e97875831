@@ -17,8 +17,8 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 	private JComboBox<?> month, ticketNo; 
 
 	private JButton btnReset, btnAdd, btnExit;
-	private JRadioButton red, white, rose;
-	private ButtonGroup wineType;
+	private JRadioButton full, week, juv;
+	private ButtonGroup member;
 	private TitledBorder title;
 
 	private String mType;
@@ -46,20 +46,9 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		p5 = new JPanel(new GridBagLayout());
 		p5.setBackground(Color.decode("#8F0B23"));
 
-		
-		/*this.productID = productID;
-		this.name = name;
-		this.colour = colour;
-		this.reigon = reigon;
-		this.country = country;
-		this.grape = grape;
-		this.noSold = noSold;
-		this.stockLevel = stockLevel;
-		this.cost = cost;
-		this.sellingPrice = sellingPrice;*/
 
 
-		lblTitle = new JLabel("<html><u>--Add Product--</u></html>",JLabel.CENTER); // create labels used throughout the addRequest GUI
+		lblTitle = new JLabel("<html><u>--Submit Request--</u></html>",JLabel.CENTER); // create labels used throughout the addRequest GUI
 		lblTitle.setFont(new Font("Arial",Font.BOLD,20));
 		lblTitle.setForeground(Color.white);
 		lblName = new JLabel("Name:",JLabel.LEFT);
@@ -81,34 +70,34 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 
 
 		name = new JTextField(); // text fields created
-		//grape = new JTextField();
+		email = new JTextField();
 		telNo = new JTextField();
 
-		red = new JRadioButton("Red");
-		red.setFont(new Font("Arial", Font.BOLD,16));  // initialising jRadio Buttons
-		red.setBackground(Color.decode("#8F0B23"));
-		red.setForeground(Color.WHITE);
-		red.addActionListener(this);
+		full = new JRadioButton("Full");
+		full.setFont(new Font("Arial", Font.BOLD,16));  // initialising jRadio Buttons
+		full.setBackground(Color.decode("#8F0B23"));
+		full.setForeground(Color.WHITE);
+		full.addActionListener(this);
 
-		white = new JRadioButton("White");
-		white.setFont(new Font("Arial", Font.BOLD,16));
-		white.setBackground(Color.decode("#8F0B23"));
-		white.setForeground(Color.WHITE);
-		white.addActionListener(this);
+		week = new JRadioButton("Weekday");
+		week.setFont(new Font("Arial", Font.BOLD,16));
+		week.setBackground(Color.decode("#8F0B23"));
+		week.setForeground(Color.WHITE);
+		week.addActionListener(this);
 
-		rose = new JRadioButton("Rose");
-		rose.setFont(new Font("Arial", Font.BOLD,16));
-		rose.setBackground(Color.decode("#8F0B23"));
-		rose.setForeground(Color.WHITE);
-		rose.addActionListener(this);
+		juv = new JRadioButton("Juvenile");
+		juv.setFont(new Font("Arial", Font.BOLD,16));
+		juv.setBackground(Color.decode("#8F0B23"));
+		juv.setForeground(Color.WHITE);
+		juv.addActionListener(this);
 
 		// create button group
-		wineType = new ButtonGroup();
-		wineType.add(red);
-		wineType.add(white);
-		wineType.add(rose);
+		member = new ButtonGroup();
+		member.add(full);
+		member.add(week);
+		member.add(juv);
 
-		title = BorderFactory.createTitledBorder("Wine Type");  // setting border, title and panel to hold jRadioButtons
+		title = BorderFactory.createTitledBorder("Member Type");  // setting border, title and panel to hold jRadioButtons
 		title.setTitleJustification(TitledBorder.LEFT);
 		title.setTitleColor(Color.WHITE);
 		title.setTitleFont(new Font("Arial", Font.BOLD,16));
@@ -144,9 +133,9 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 
 		addComp(p1,lblTitle,1,0,1,1,1,0); // Adding components to their panels
 
-		addComp(p5,red,0,0,1,1,0,1);
-		addComp(p5,white,0,1,1,1,0,1);
-		addComp(p5,rose,0,2,1,1,0,1);
+		addComp(p5,full,0,0,1,1,0,1);
+		addComp(p5,week,0,1,1,1,0,1);
+		addComp(p5,juv,0,2,1,1,0,1);
 
 		addComp(p2,buf,0,0,1,1,1,0);
 		addComp(p2,lblName,1,0,1,1,0,0);
