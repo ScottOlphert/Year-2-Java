@@ -2,6 +2,8 @@ package selective_wines;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 import javax.swing.*;
 
 public class SWMenu extends JFrame implements ActionListener
@@ -16,6 +18,12 @@ public class SWMenu extends JFrame implements ActionListener
 	
 	Font sml = new Font("Arial", Font.BOLD,16); // create fonts used on the menu form
 	Font lrg = new Font("Arial", Font.BOLD,18);
+	
+	private static HashMap<String, Product> stockItems = new HashMap<String, Product> (50); // HashMap to hold stock for easy access and updating.
+	private static LinkedList<Sales> sales = new LinkedList<Sales>();  // Linked list to hold the sales, more efficient for growing list of unknown size
+	
+	File Stock = new File("Stock"); // creating file for Read and write methods
+	File Sales = new File("Sales");
 	
 	public SWMenu() // menu for constructor
 	{
@@ -111,13 +119,142 @@ public class SWMenu extends JFrame implements ActionListener
 		jmb.add(system);
 		
 		setJMenuBar(jmb); //set the JMenu to the container
+		
+		ReadStock();
+		ReadSales();
 	}
 
 	
 	public void actionPerformed(ActionEvent e) // set actions for the menu bar option buttons
 	{
-		// TODO Auto-generated method stub
+		if(e.getSource() == addProd)
+		{
+			
+		}
 		
+		if(e.getSource() == editProd)
+		{
+			
+		}
+		
+		if(e.getSource() == delProd)
+		{
+			
+		}
+		
+		if(e.getSource() == dispStock)
+		{
+			
+		}
+		
+		if(e.getSource() == sale)
+		{
+			
+		}
+		
+		if(e.getSource() == stockRep)
+		{
+			
+		}
+		
+		if(e.getSource() == salesRep)
+		{
+			
+		}
+		
+		if(e.getSource() == eSystem)
+		{
+			WriteStock();
+			WriteSales();
+			System.exit(0);
+		}
+		
+	}
+	
+	public void ReadStock()
+	{
+		try{
+			FileInputStream fis = new FileInputStream("Stock");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			stockItems = (HashMap<String, Product>) ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch(ClassNotFoundException cEx)
+		{
+			JOptionPane.showMessageDialog(null, "The contents could not be read");
+		}
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Could not read from file");
+		}
+	}
+	
+	public void ReadSales()
+	{
+		try{
+			FileInputStream fis = new FileInputStream("Sales");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			sales = (LinkedList<Sales>) ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch(ClassNotFoundException cEx)
+		{
+			JOptionPane.showMessageDialog(null, "The contents could not be read");
+		}
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Could not read from file");
+		}
+	}
+	
+	public void WriteStock()
+	{
+		try{
+			FileOutputStream fos = new FileOutputStream(Stock);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(stockItems);
+			oos.close();
+			fos.close();
+		}
+		
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Could not write file");
+		}
+	}
+	
+	public void WriteSales()
+	{
+		try{
+			FileOutputStream fos = new FileOutputStream(Sales);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(sales);
+			oos.close();
+			fos.close();
+		}
+		
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Could not write file");
+		}
 	}
 
 	

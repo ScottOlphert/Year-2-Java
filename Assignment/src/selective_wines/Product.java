@@ -1,6 +1,8 @@
 package selective_wines;
 
-public class Product 
+import java.io.*;
+
+public class Product implements Serializable
 {
 	
 	String productID, name, colour, reigon, country, grape;

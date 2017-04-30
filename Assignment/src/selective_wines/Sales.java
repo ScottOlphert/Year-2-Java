@@ -1,8 +1,9 @@
 package selective_wines;
 
+import java.io.*;
 import java.time.LocalDateTime;
 
-public class Sales 
+public class Sales implements Serializable
 {
 	
 	int saleID, noItems;
