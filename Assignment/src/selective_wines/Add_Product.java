@@ -10,18 +10,15 @@ import javax.swing.border.*;
 public class Add_Product extends JFrame implements ActionListener, MouseListener {
 
 	private Container cn; 
-	private JLabel lblTitle,lblName,lblEmail,lblDate,lblTelNo,lblReq,
+	private JLabel lblTitle,lblName,lblCountry,lblRegion,lblGrape,lblCost, lblPrice, lblUnits,
 	buf,buf1,buf2,buf3, buf4;
 	private JPanel p1, p2, p3, p4, p5;
-	private JTextField name, email, telNo, day, year;
-	private JComboBox<?> month, ticketNo; 
-
+	private JTextField name, cost, price, units;
+	private JComboBox<?> country, region, grape; 
 	private JButton btnReset, btnAdd, btnExit;
 	private JRadioButton red, white, rose;
 	private ButtonGroup wineType;
 	private TitledBorder title;
-
-	private String mType;
 
 	private  HashMap<String, Product> item = new HashMap<String, Product> (50); // local #map created
 
@@ -53,7 +50,7 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		this.reigon = reigon;
 		this.country = country;
 		this.grape = grape;
-		this.noSold = noSold;
+		this.noSold = noSold;.
 		this.stockLevel = stockLevel;
 		this.cost = cost;
 		this.sellingPrice = sellingPrice;*/
@@ -64,26 +61,30 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		lblTitle.setForeground(Color.white);
 		lblName = new JLabel("Name:",JLabel.LEFT);
 		lblName.setForeground(Color.WHITE);
-		lblEmail = new JLabel("Email:", JLabel.LEFT);
-		lblEmail.setForeground(Color.WHITE);
-		lblTelNo = new JLabel("Phone:", JLabel.LEFT);
-		lblTelNo.setForeground(Color.WHITE);
-		lblDate = new JLabel("Member Start Date:", JLabel.LEFT);
-		lblDate.setForeground(Color.WHITE);
-		lblReq = new JLabel("Tickets Wanted:", JLabel.LEFT);
-		lblReq.setForeground(Color.WHITE);
-
+		lblCountry = new JLabel("Country:", JLabel.LEFT);
+		lblCountry.setForeground(Color.WHITE);
+		lblRegion = new JLabel("Region:", JLabel.LEFT);
+		lblRegion.setForeground(Color.WHITE);
+		lblGrape = new JLabel("Grape:", JLabel.LEFT);
+		lblGrape.setForeground(Color.WHITE);
+		lblCost = new JLabel("Cost:", JLabel.LEFT);
+		lblCost.setForeground(Color.WHITE);
+		lblPrice.setForeground(Color.WHITE);
+		lblPrice = new JLabel("Price:", JLabel.LEFT);
+		lblUnits.setForeground(Color.WHITE);
+		lblUnits = new JLabel("Number of bottles:", JLabel.LEFT);
+		
 		buf = new JLabel("    ");		// empty labels to help with spacing on GridBag
 		buf1 = new JLabel("    ");
 		buf2 = new JLabel("    ");
 		buf3 = new JLabel("    ");
 		buf4 = new JLabel("    ");
 
-
 		name = new JTextField(); // text fields created
-		//grape = new JTextField();
-		telNo = new JTextField();
-
+		cost = new JTextField();
+		price = new JTextField();
+		units = new JTextField();
+		
 		red = new JRadioButton("Red");
 		red.setFont(new Font("Arial", Font.BOLD,16));  // initialising jRadio Buttons
 		red.setBackground(Color.decode("#8F0B23"));
@@ -112,25 +113,20 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		title.setTitleJustification(TitledBorder.LEFT);
 		title.setTitleColor(Color.WHITE);
 		title.setTitleFont(new Font("Arial", Font.BOLD,16));
-		p5.setBorder(title);
-
-
-		day = new JTextField();    // set up of text fields and a combo box to retrieve day month and year for LocalDateTime
-		day.addMouseListener(this);
-		day.setText("--Day--");
-		day.setFont(new Font("Arial", Font.PLAIN,14));
-		String [] months = {"--Month--","January", "February", "March", "April", "May", "June","July","August","Septemner","October","November","December"};
-		month = new JComboBox(months);
-		month.setFont(new Font("Arial", Font.PLAIN,14));
-		month.setBackground(Color.WHITE);
-		year = new JTextField();
-		year.addMouseListener(this);
-		year.setFont(new Font("Arial", Font.PLAIN,14));
-		year.setText("--Year--");
-
-		String [] tickets = {"--Select--","1","2","3","4"}; // Combo box for ticket request
-		ticketNo = new JComboBox(tickets);
-		ticketNo.setBackground(Color.WHITE);
+		p5.setBorder(title); 
+		
+		country = new JComboBox();
+		country.setFont(new Font("Arial", Font.PLAIN,14));
+		country.setBackground(Color.WHITE);
+		
+		region = new JComboBox();
+		region.setFont(new Font("Arial", Font.PLAIN,14));
+		region.setBackground(Color.WHITE);
+		
+		grape = new JComboBox();
+		grape.setFont(new Font("Arial", Font.PLAIN,14));
+		grape.setBackground(Color.WHITE);
+		
 
 		btnReset = new JButton("Clear");  // create buttons for GUI
 		btnReset.setBackground(Color.white);
