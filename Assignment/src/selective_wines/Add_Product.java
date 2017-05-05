@@ -11,9 +11,9 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 
 	private Container cn; 
 	private JLabel lblTitle,lblName,lblCountry,lblRegion,lblGrape,lblCost, lblPrice, lblUnits,
-	buf,buf1,buf2,buf3, buf4;
-	private JPanel p1, p2, p3, p4, p5;
-	private JTextField name, cost, price, units;
+	buf,buf1,buf2,buf3, buf4, buf5, buf6, buf7, buf8, buf9, buf10;
+	private JPanel p1, p2, p3, p4, p5, p6, p7, p8;
+	private JTextField name, newCountry, newRegion, newGrape, cost, price, units;
 	private JComboBox<?> country, region, grape; 
 	private JButton btnReset, btnAdd, btnExit;
 	private JRadioButton red, white, rose;
@@ -42,6 +42,12 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		p4.setBackground(Color.decode("#8F0B23"));
 		p5 = new JPanel(new GridBagLayout());
 		p5.setBackground(Color.decode("#8F0B23"));
+		p6 = new JPanel(new GridBagLayout());
+		p6.setBackground(Color.decode("#8F0B23"));
+		p7 = new JPanel(new GridBagLayout());
+		p7.setBackground(Color.decode("#8F0B23"));
+		p8 = new JPanel(new GridBagLayout());
+		p8.setBackground(Color.decode("#8F0B23"));
 
 		
 		/*this.productID = productID;
@@ -69,21 +75,36 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		lblGrape.setForeground(Color.WHITE);
 		lblCost = new JLabel("Cost:", JLabel.LEFT);
 		lblCost.setForeground(Color.WHITE);
-		lblPrice.setForeground(Color.WHITE);
 		lblPrice = new JLabel("Price:", JLabel.LEFT);
+		lblPrice.setForeground(Color.WHITE);
+		lblUnits = new JLabel("Number of bottles:", JLabel.CENTER);
 		lblUnits.setForeground(Color.WHITE);
-		lblUnits = new JLabel("Number of bottles:", JLabel.LEFT);
 		
 		buf = new JLabel("    ");		// empty labels to help with spacing on GridBag
 		buf1 = new JLabel("    ");
 		buf2 = new JLabel("    ");
 		buf3 = new JLabel("    ");
 		buf4 = new JLabel("    ");
+		buf5 = new JLabel("    ");
+		buf5.setVisible(false); // needed only when new country visible
+		buf6 = new JLabel("    ");
+		buf6.setVisible(false); // needed only when new region visible
+		buf7 = new JLabel("    ");
+		buf8 = new JLabel("    ");
+		buf9 = new JLabel("    ");
+		buf10 = new JLabel("    ");
 
 		name = new JTextField(); // text fields created
 		cost = new JTextField();
 		price = new JTextField();
 		units = new JTextField();
+		newCountry = new JTextField();
+		newRegion = new JTextField();
+		newGrape = new JTextField();
+		
+		newCountry.setVisible(false); // fields will only be available when user needs to add a new options to the available combo boxes
+		newRegion.setVisible(false);
+		newGrape.setVisible(false);
 		
 		red = new JRadioButton("Red");
 		red.setFont(new Font("Arial", Font.BOLD,16));  // initialising jRadio Buttons
@@ -128,10 +149,10 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		grape.setBackground(Color.WHITE);
 		
 
-		btnReset = new JButton("Clear");  // create buttons for GUI
+		btnReset = new JButton("Reset");  // create buttons for GUI
 		btnReset.setBackground(Color.white);
 		btnReset.addActionListener(this);
-		btnAdd = new JButton("Submit");
+		btnAdd = new JButton("Add");
 		btnAdd.setBackground(Color.white);
 		btnAdd.addActionListener(this);
 		btnExit = new JButton("Close");
@@ -140,37 +161,54 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 
 		addComp(p1,lblTitle,1,0,1,1,1,0); // Adding components to their panels
 
-		addComp(p5,red,0,0,1,1,0,1);
-		addComp(p5,white,0,1,1,1,0,1);
-		addComp(p5,rose,0,2,1,1,0,1);
+		addComp(p5,red,0,0,1,1,0,0);
+		addComp(p5,white,0,1,1,1,0,0);
+		addComp(p5,rose,0,2,1,1,0,0);
 
-		addComp(p2,buf,0,0,1,1,1,0);
-		addComp(p2,lblName,1,0,1,1,0,0);
-		addComp(p2, p5,4,1,1,5,0,0);
-		addComp(p2,buf1,5,0,1,1,1,0);
-		addComp(p2,name,1,1,3,1,2,0);
-		addComp(p2,lblEmail,1,2,1,1,0,0);
-		addComp(p2,email,1,3,3,1,2,0);
-		addComp(p2,lblTelNo,1,4,1,1,0,0);
-		addComp(p2,telNo,1,5,3,1,2,0);
-		addComp(p2,lblDate,1,6,1,1,0,0);
-		addComp(p2,month,1,7,2,1,1,0);
-		addComp(p2,day,3,7,1,1,1,0);
-		addComp(p2,year,4,7,1,1,1,0);
-		addComp(p2,lblReq,1,8,1,1,0,0);
-		addComp(p2,ticketNo,1,9,2,1,1,0);
-		addComp(p2,btnReset,1,10,1,1,1,0);
-		addComp(p2,btnAdd,4,10,1,1,1,0);
+		addComp(p2,buf,0,0,2,1,2,0);
+		addComp(p2,p6,2,0,2,1,2,0);
+		addComp(p2, p7,4,0,1,1,1,0);
+		addComp(p2,buf1,5,0,2,1,2,0);
+		
+		addComp(p8,lblUnits,2,0,1,1,0,0);
+		addComp(p8,units,2,1,1,1,0,0);
+		addComp(p8,buf8,0,0,2,1,1,0);
+		addComp(p8,buf9,3,0,2,1,1,0);
+		addComp(p8,buf10,0,2,5,1,1,0);
+		
+		addComp(p6,lblName,1,0,1,1,0,0);
+		addComp(p6,name,1,1,3,1,2,0);
+		addComp(p6,lblCountry,1,2,1,1,0,0);
+		addComp(p6,country,1,3,3,1,2,0);
+		addComp(p6,newCountry,1,4,3,1,2,0);
+		addComp(p6,lblRegion,1,5,1,1,0,0);
+		addComp(p6,region,1,6,3,1,2,0);
+		addComp(p6,newRegion,1,7,3,1,2,0);
+		addComp(p6,lblGrape,1,8,1,1,0,0);
+		addComp(p6,grape,1,9,3,1,1,0);
+		addComp(p6,newGrape,1,10,3,1,2,0);
+		
+		addComp(p7,p5,0,0,1,4,0,0);
+		addComp(p7,buf5,0,4,1,1,1,1);
+		addComp(p7,lblCost,0,5,1,1,0,0);
+		addComp(p7,cost,0,6,1,1,0,0);
+		addComp(p7,buf6,0,7,1,1,1,1);
+		addComp(p7,lblPrice,0,8,1,1,0,0);
+		addComp(p7,price,0,9,1,1,0,0);
+		addComp(p7,buf7,0,10,1,1,1,1);
 
-		addComp(p3,buf2,0,0,1,1,1,0);
-		addComp(p3,btnExit,1,0,3,1,2,0);
-		addComp(p3,buf3,4,0,1,1,1,0);
-		addComp(p3,buf4,0,1,5,1,2,1);
+		addComp(p3,btnReset,1,0,1,1,1,0);
+		addComp(p3,btnAdd,3,0,1,1,1,0);
+		addComp(p3,buf2,0,2,1,1,2,0);
+		addComp(p3,btnExit,1,1,3,1,3,0);
+		addComp(p3,buf3,4,1,1,1,2,0);
+		addComp(p3,buf4,0,2,5,1,3,1);
 
 		addComp(cn,p1,0,0,1,1,1,1); // adding panels to the container
 		addComp(cn,p2,0,1,1,1,1,1);
-		addComp(cn,p3,0,2,1,1,1,1);
-		addComp(cn,p4,0,3,1,1,1,3);
+		addComp(cn,p8,0,2,1,1,1,1);
+		addComp(cn,p3,0,3,1,1,1,1);
+		addComp(cn,p4,0,4,1,1,1,3);
 	}
 
 
