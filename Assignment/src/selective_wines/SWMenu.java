@@ -6,16 +6,23 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-public class SWMenu extends JFrame implements ActionListener
+public class SWMenu extends JFrame implements ActionListener, MouseListener 
 {
 
 	private JMenuBar jmb;
 	private JMenu product,stock,report,system;
 	private JMenuItem addProd,editProd,delProd,dispStock,sale, stockRep, salesRep, eSystem;
 	private Container cn;
+	private JPanel panel;
+	private JScrollPane jsp, jsp2;
 	private JLabel pic;
+	private JTextArea left, right;
 	private ImageIcon logo = new ImageIcon("resource/logo.jpg"); // create logo for program
 	private Add_Product add; // add product form
+	private Display_Stock display; // Display stock form
+	private Sales_Rep saleRep; // sales report form
+	private Edit_Product edit;
+	private Delete_Product delete;
 
 	Font sml = new Font("Arial", Font.BOLD,16); // create fonts used on the menu form
 	Font lrg = new Font("Arial", Font.BOLD,18);
@@ -30,8 +37,9 @@ public class SWMenu extends JFrame implements ActionListener
 	{
 		cn= getContentPane();
 		cn.setBackground(Color.WHITE);  // container
-
+		
 		jmb = new JMenuBar();
+		jmb.addMouseListener(this);
 		jmb.setBackground(Color.decode("#8F0B23")); //Menu bar
 
 		product = new JMenu("Product"); // menu option
@@ -89,12 +97,12 @@ public class SWMenu extends JFrame implements ActionListener
 		sale.addActionListener(this);
 		stock.add(sale);
 
-		stockRep = new JMenuItem("Stock Report"); // stock report menu option
+		/*stockRep = new JMenuItem("Stock Report"); // stock report menu option
 		stockRep.setFont(sml);
 		stockRep.setBackground(Color.decode("#F9F9F9"));
 		stockRep.setForeground(Color.BLACK);
 		stockRep.addActionListener(this);
-		report.add(stockRep);
+		report.add(stockRep);*/
 
 		salesRep = new JMenuItem("Sales Report"); // sales menu option
 		salesRep.setFont(sml);
@@ -109,11 +117,27 @@ public class SWMenu extends JFrame implements ActionListener
 		eSystem.setForeground(Color.BLACK);
 		eSystem.addActionListener(this);
 		system.add(eSystem); 
+		
+		panel = new JPanel(new BorderLayout());// create panel to hold Picture and text fields
+		panel.addMouseListener(this);
 
 		pic = new JLabel(logo); // add logo to the JLable 
-
-		cn.add(pic); // add JLabale to the panel
-
+		pic.setPreferredSize(new Dimension(600, 600)); // set size
+		
+		left = new JTextArea();
+		left.setPreferredSize(new Dimension(295, 300));
+		right = new JTextArea(); // creating text field
+		right.setPreferredSize(new Dimension(295, 300));
+		
+		jsp = new JScrollPane(left);
+		jsp2 = new JScrollPane(right);
+		
+		panel.add(pic,BorderLayout.NORTH); // add Picture
+		panel.add(jsp, BorderLayout.EAST);
+		panel.add(jsp2, BorderLayout.WEST);// adding text fields
+		
+		cn.add(panel); // add panel to the container
+		
 		jmb.add(product);  // add menu options to the menu bar
 		jmb.add(stock);
 		jmb.add(report);
@@ -128,9 +152,32 @@ public class SWMenu extends JFrame implements ActionListener
 
 		// add product form.
 		add = new Add_Product(stockItems); // pass stock #map to add form
-		add.setTitle("Add Student");
+		add.setTitle("Add Product");
 		add.setSize(500,600);
 		add.setLocation(100,100);
+		
+		//Display/Report Stock form
+		display = new Display_Stock(stockItems); // pass stock #map to display form
+		display.setTitle("Display Stock");
+		display.setSize(1000,600);
+		display.setLocation(100,100);
+		
+		// sales report form
+		saleRep = new Sales_Rep(sales); // pass sales linked list to sales form
+		saleRep.setTitle("Sales Report");
+		saleRep.setSize(1000,600);
+		saleRep.setLocation(100,100);
+		
+		 // edit product form.
+		edit = new Edit_Product(stockItems); // pass stock #map to add form
+		edit.setTitle("Edit Product");
+		edit.setSize(500,700);
+		edit.setLocation(100,100);
+		
+		delete = new Delete_Product(stockItems); // pass stock #map to add form
+		delete.setTitle("Delete Product");
+		delete.setSize(500,700);
+		delete.setLocation(100,100);
 	}
 
 
@@ -143,17 +190,17 @@ public class SWMenu extends JFrame implements ActionListener
 
 		if(e.getSource() == editProd)
 		{
-
+			edit.setVisible(true);
 		}
 
 		if(e.getSource() == delProd)
 		{
-
+			delete.setVisible(true);
 		}
 
 		if(e.getSource() == dispStock)
 		{
-
+			display.setVisible(true);
 		}
 
 		if(e.getSource() == sale)
@@ -161,14 +208,14 @@ public class SWMenu extends JFrame implements ActionListener
 
 		}
 
-		if(e.getSource() == stockRep)
+		/*if(e.getSource() == stockRep)
 		{
 
-		}
+		}*/
 
 		if(e.getSource() == salesRep)
 		{
-
+			saleRep.setVisible(true);
 		}
 
 		if(e.getSource() == eSystem)
@@ -264,6 +311,46 @@ public class SWMenu extends JFrame implements ActionListener
 		{
 			JOptionPane.showMessageDialog(null, "Could not write to Sales.dat");
 		}
+	}
+	
+	public static void setFocus()
+	{
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		left.append("Sucess");
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

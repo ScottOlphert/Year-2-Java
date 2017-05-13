@@ -2,23 +2,30 @@ package selective_wines;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class Add_Product extends JFrame implements ActionListener, MouseListener {
+public class Add_Product extends JFrame implements ActionListener {
 
 	private Container cn; 
 	private JLabel lblTitle,lblName,lblCountry,lblRegion,lblGrape,lblCost, lblPrice, lblUnits,
 	buf,buf1,buf2,buf3, buf4, buf5, buf6, buf7, buf8, buf9, buf10;
 	private JPanel p1, p2, p3, p4, p5, p6, p7, p8;
 	private JTextField name, newCountry, newRegion, newGrape, cost, price, units;
-	private JComboBox<?> country, region, grape; 
+	private JComboBox country, region, grape; 
+	private DefaultComboBoxModel[] rModel = new DefaultComboBoxModel[8], gModel = new DefaultComboBoxModel[3];
 	private JButton btnReset, btnAdd, btnExit;
 	private JRadioButton red, white, rose;
 	private ButtonGroup wineType;
 	private TitledBorder title;
+
+	private int productID = 10000;
 
 	private  HashMap<String, Product> item = new HashMap<String, Product> (50); // local #map created
 
@@ -49,19 +56,6 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		p8 = new JPanel(new GridBagLayout());
 		p8.setBackground(Color.decode("#8F0B23"));
 
-		
-		/*this.productID = productID;
-		this.name = name;
-		this.colour = colour;
-		this.reigon = reigon;
-		this.country = country;
-		this.grape = grape;
-		this.noSold = noSold;.
-		this.stockLevel = stockLevel;
-		this.cost = cost;
-		this.sellingPrice = sellingPrice;*/
-
-
 		lblTitle = new JLabel("<html><u>--Add Product--</u></html>",JLabel.CENTER); // create labels used throughout the addRequest GUI
 		lblTitle.setFont(new Font("Arial",Font.BOLD,20));
 		lblTitle.setForeground(Color.white);
@@ -77,18 +71,18 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		lblCost.setForeground(Color.WHITE);
 		lblPrice = new JLabel("Price:", JLabel.LEFT);
 		lblPrice.setForeground(Color.WHITE);
-		lblUnits = new JLabel("Number of bottles:", JLabel.CENTER);
+		lblUnits = new JLabel("Number in Stock:", JLabel.CENTER);
 		lblUnits.setForeground(Color.WHITE);
-		
+
 		buf = new JLabel("    ");		// empty labels to help with spacing on GridBag
 		buf1 = new JLabel("    ");
 		buf2 = new JLabel("    ");
 		buf3 = new JLabel("    ");
 		buf4 = new JLabel("    ");
 		buf5 = new JLabel("    ");
-		buf5.setVisible(false); // needed only when new country visible
+		//buf5.setVisible(false); // needed only when new country visible (Delete if not implemented)
 		buf6 = new JLabel("    ");
-		buf6.setVisible(false); // needed only when new region visible
+		//buf6.setVisible(false); // needed only when new region visible
 		buf7 = new JLabel("    ");
 		buf8 = new JLabel("    ");
 		buf9 = new JLabel("    ");
@@ -98,14 +92,14 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		cost = new JTextField();
 		price = new JTextField();
 		units = new JTextField();
-		newCountry = new JTextField();
+		/*newCountry = new JTextField();
 		newRegion = new JTextField();
 		newGrape = new JTextField();
-		
+
 		newCountry.setVisible(false); // fields will only be available when user needs to add a new options to the available combo boxes
 		newRegion.setVisible(false);
-		newGrape.setVisible(false);
-		
+		newGrape.setVisible(false);*/
+
 		red = new JRadioButton("Red");
 		red.setFont(new Font("Arial", Font.BOLD,16));  // initialising jRadio Buttons
 		red.setBackground(Color.decode("#8F0B23"));
@@ -135,19 +129,24 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		title.setTitleColor(Color.WHITE);
 		title.setTitleFont(new Font("Arial", Font.BOLD,16));
 		p5.setBorder(title); 
-		
-		country = new JComboBox();
+
+		country = new JComboBox(); // Combo box for selection of country
 		country.setFont(new Font("Arial", Font.PLAIN,14));
 		country.setBackground(Color.WHITE);
-		
-		region = new JComboBox();
+		country.addActionListener(this);
+		readCountry();
+
+		region = new JComboBox(); // Combo box for selection of region
 		region.setFont(new Font("Arial", Font.PLAIN,14));
 		region.setBackground(Color.WHITE);
-		
-		grape = new JComboBox();
+		region.setEnabled(false);
+		region.addActionListener(this);
+
+		grape = new JComboBox(); // Combo box for selection of grape
 		grape.setFont(new Font("Arial", Font.PLAIN,14));
 		grape.setBackground(Color.WHITE);
-		
+		grape.setEnabled(false);
+		grape.addActionListener(this);
 
 		btnReset = new JButton("Reset");  // create buttons for GUI
 		btnReset.setBackground(Color.white);
@@ -169,25 +168,22 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		addComp(p2,p6,2,0,2,1,2,0);
 		addComp(p2, p7,4,0,1,1,1,0);
 		addComp(p2,buf1,5,0,2,1,2,0);
-		
+
 		addComp(p8,lblUnits,2,0,1,1,0,0);
 		addComp(p8,units,2,1,1,1,0,0);
 		addComp(p8,buf8,0,0,2,1,1,0);
 		addComp(p8,buf9,3,0,2,1,1,0);
 		addComp(p8,buf10,0,2,5,1,1,0);
-		
+
 		addComp(p6,lblName,1,0,1,1,0,0);
 		addComp(p6,name,1,1,3,1,2,0);
 		addComp(p6,lblCountry,1,2,1,1,0,0);
 		addComp(p6,country,1,3,3,1,2,0);
-		addComp(p6,newCountry,1,4,3,1,2,0);
 		addComp(p6,lblRegion,1,5,1,1,0,0);
 		addComp(p6,region,1,6,3,1,2,0);
-		addComp(p6,newRegion,1,7,3,1,2,0);
 		addComp(p6,lblGrape,1,8,1,1,0,0);
 		addComp(p6,grape,1,9,3,1,1,0);
-		addComp(p6,newGrape,1,10,3,1,2,0);
-		
+
 		addComp(p7,p5,0,0,1,4,0,0);
 		addComp(p7,buf5,0,4,1,1,1,1);
 		addComp(p7,lblCost,0,5,1,1,0,0);
@@ -204,79 +200,254 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		addComp(p3,buf3,4,1,1,1,2,0);
 		addComp(p3,buf4,0,2,5,1,3,1);
 
-		addComp(cn,p1,0,0,1,1,1,1); // adding panels to the container
-		addComp(cn,p2,0,1,1,1,1,1);
-		addComp(cn,p8,0,2,1,1,1,1);
-		addComp(cn,p3,0,3,1,1,1,1);
-		addComp(cn,p4,0,4,1,1,1,3);
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		addComp(cn,p1,0,0,1,1,1,1); // adding panel 1 to the container Title
+		addComp(cn,p2,0,1,1,1,1,1);// adding panel 2 to the container product name, country, colour, cost etc
+		addComp(cn,p8,0,2,1,1,1,1); // adding panel 8 to container number of bottles in stock
+		addComp(cn,p3,0,3,1,1,1,1);// adding panel 3 to container buttons Add, exit reset
+		addComp(cn,p4,0,4,1,1,1,3); // panel to deal with resizing issues
 		
+		createRModels(); // create the combobox models for each countries region list
+		createGModels(); // create the combobox models for grape
+
 	}
 
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// Method used to add component to the container and declare constraints
-		private void addComp(Container Con, Component c, int x, int y, int width, int height, int Weightx, int weighty)
+
+		if(e.getSource() == country)
 		{
-			Font all = new Font("Arial", Font.BOLD,16); // Create a font to use as default
+			regionSelect();
+		}
+		
+		if(e.getSource() == red)
+		{
+			grape.setEnabled(true);
+			grape.setModel(gModel[0]);
+		}
+		
+		if(e.getSource() == white)
+		{
+			grape.setEnabled(true);
+			grape.setModel(gModel[1]);
+		}
+		
+		if(e.getSource() == rose)
+		{
+			grape.setEnabled(true);
+			grape.setModel(gModel[2]);
+		}
 
-			// Create instance of constraints
-			GridBagConstraints gc = new GridBagConstraints();
-
-			//set constraints
-			gc.fill = GridBagConstraints.BOTH;
-			gc.anchor = GridBagConstraints.CENTER;
-			gc.insets = new Insets(5,5,5,5);// sets the space between components 
-			gc.gridx = x;
-			gc.gridy = y;
-			gc.gridwidth = width;
-			gc.gridheight = height;
-			gc.weightx = Weightx;
-			gc.weighty = weighty;
-
-			// set the font using the default created above
-			c.setFont(all); 
-
-			//add the component to the container
-			Con.add(c, gc);
+		if(e.getSource() == btnAdd)
+		{
 
 		}
+
+	}
+
+	public void add()
+	{
+		String colour = "";
+
+		Product product = new Product();
+
+		if(red.isSelected())
+		{
+			colour = "Red";
+		}
+		if(white.isSelected())
+		{
+			colour = "White";
+		}
+		if(rose.isSelected())
+		{
+			colour = "rose";
+		}
+
+		/*this.productID = productID;
+		this.name = name;
+		this.colour = colour;
+		this.reigon = reigon;
+		this.country = country;
+		this.grape = grape;
+		this.noSold = noSold;
+		this.stockLevel = stockLevel;
+		this.cost = cost;
+		this.sellingPrice = sellingPrice;*/
+
+		product.setProductID(Integer.toString(productID));
+		product.setName(name.getText());
+		product.setColour(colour);
+		product.setCountry(country.getSelectedItem().toString());
+		product.setReigon(region.getSelectedItem().toString());
+		product.setGrape(grape.getSelectedItem().toString());
+		product.setCost(Double.parseDouble(cost.getText()));
+		product.setSellingPrice(Double.parseDouble(price.getText()));
+		product.setStockLevel(Integer.parseInt(units.getText()));
+
+		item.put(product.getProductID(), product);
+
+
+
+
+
+	}
+
+	public void readCountry()
+	{
+		String name = "";
+		try
+		{
+			BufferedReader Country = new BufferedReader(new FileReader("resource/Country.txt"));
+			boolean eof = false;
+
+			while(eof!=true)
+			{
+				name = Country.readLine();
+				if(name!=null)
+					country.addItem(name);
+				else
+					eof=true;
+			}
+		}
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Problem with the file");
+		}
+	}
+
+/*	public void readRegion(String file)
+	{
+		String name = "";
+		try
+		{
+			BufferedReader regionFile = new BufferedReader(new FileReader(file));
+			boolean eof = false;
+
+			while(eof!=true)
+			{
+				name = regionFile.readLine();
+				if(name!=null)
+					region.addItem(name);
+				else
+					eof=true;
+			}
+		}
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
+		catch(IOException ioEx)
+		{
+			JOptionPane.showMessageDialog(null, "Problem with the file");
+		}
+	}*/
+
+	public void regionSelect()
+	{
+		
+		String opt = country.getSelectedItem().toString();
+		if(!country.getSelectedItem().toString().equals("--Select--"))
+		{
+
+			switch(opt)
+			{
+			case "Australia":
+				region.setEnabled(true);
+				region.setModel(rModel[0]);
+				break;
+			case "Chile":
+				region.setEnabled(true);
+				region.setModel(rModel[1]);
+				break;
+			case "France":
+				region.setEnabled(true);
+				region.setModel(rModel[2]);
+				break;
+			case "Germany":
+				region.setEnabled(true);
+				region.setModel(rModel[3]);
+				break;
+			case "New Zealand":
+				region.setEnabled(true);
+				region.setModel(rModel[4]);
+				break;
+			case "South Africa":
+				region.setEnabled(true);
+				region.setModel(rModel[5]);
+				break;
+			case "Spain":
+				region.setEnabled(true);
+				region.setModel(rModel[6]);
+				break;
+			case "United States":
+				region.setEnabled(true);
+				region.setModel(rModel[7]);
+				break;
+
+			}
+		}
+	}
+	
+	public void createRModels() // create combo box models for regions
+	{
+		//austrailia
+		rModel[0]= new DefaultComboBoxModel(new String[]{"--Select--","Adelaide Hills", "Barossa Valley", "Clare Valley", "Coonawarra", "Eden Valley", "Langhorne Creek", "McLaren Vale", "Padthaway"});
+		//Chile
+		rModel[1]= new DefaultComboBoxModel(new String[]{"--Select--","Leyda Valley","Teno Valley","Claro Valley","Rapel Valley","Elqui Valley","Limarí Valley","Choapa Valley","Aconcagua Valley"});
+		//france
+		rModel[2]= new DefaultComboBoxModel(new String[]{"--Select--","Alsace","Bordeaux","Burgundy","Beaujolais","Champagne","Côtes du Rhone","Jura","Languedoc"});
+		//germany
+		rModel[3]= new DefaultComboBoxModel(new String[]{"--Select--","Ahr","Baden","Franconia","Hessische Bergstrase","Mittelrhein","Mosel","Nahe","Palatinate","Rheingau"});
+		//New Zeland
+		rModel[4]= new DefaultComboBoxModel(new String[]{"--Select--","Northland","Auckland","Waiheke Island","Waikato/Bay of Plenty","Gisborne","Hawke's Bay","Wellington/Wairarapa","Martinborough","Nelson","Marlborough","Wairau Valley"});
+		//south africa
+		rModel[5]= new DefaultComboBoxModel(new String[]{"--Select--","Paarl","Franschhoek","Tulbagh","Breedekloof","Robertson","Worcester","Cape Agulhas","Overberg","Plettenberg Bay"});
+		//Spain
+		rModel[6]= new DefaultComboBoxModel(new String[]{"--Select--","Catalonia","Rioja","Cava","Ribera del Duero","Galicia","Priorat","Sherry","Navarra"});
+		//USA
+		rModel[7]= new DefaultComboBoxModel(new String[]{"--Select--","Augusta, MO"," Snake River Valley, ID","Paso Robles, CA","Texas Hill Country","Walla Walla, WA","Santa Barbara County, CA","Charlottesville/Central Virginia","Napa Valley, CA"});
+
+	}
+	
+	public void createGModels() // create combobox models for Grape
+	{
+		//Red
+		gModel[0]= new DefaultComboBoxModel(new String[]{"--Select--","Canernet Sauvignon","Pinot Noir","Merlot","Shiraz","Grenache","Zinfandel","Tempranillo","Muscat",
+				"Nebbiolo","Gamay","Mataro","Blauframkisch","Dolcetto","Cinsaut","Nero d'Acola"});
+		//White
+		gModel[1]= new DefaultComboBoxModel(new String[]{"--Select--","Chardonnay","Sauvignon Blanc","Riesling","Pinot Gris","Semillon","Viognier","Gewurztrami",
+				"Muscat","Chenin blanc","Pinot blanc","Marsanne","Roussanne","Torrontes","Malvasia","Verdejo"});
+		//Rose
+		gModel[2]= new DefaultComboBoxModel(new String[]{"--Select--","Grenache","Pinot Noir","Cinsaut","Muscat","Sangiovese","Mataro","Tempranillo","Gamay","Nebbiolo",
+				"Pinot Meunier","Mancia","Blauframkisch","Zweigelt","Counoise","Negroamaro"});
+	}
+	// Method used to add component to the container and declare constraints
+	private void addComp(Container Con, Component c, int x, int y, int width, int height, int Weightx, int weighty)
+	{
+		Font all = new Font("Arial", Font.BOLD,16); // Create a font to use as default
+
+		// Create instance of constraints
+		GridBagConstraints gc = new GridBagConstraints();
+
+		//set constraints
+		gc.fill = GridBagConstraints.BOTH;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.insets = new Insets(5,5,5,5);// sets the space between components 
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.gridwidth = width;
+		gc.gridheight = height;
+		gc.weightx = Weightx;
+		gc.weighty = weighty;
+
+		// set the font using the default created above
+		c.setFont(all); 
+
+		//add the component to the container
+		Con.add(c, gc);
+
+	}
 }
