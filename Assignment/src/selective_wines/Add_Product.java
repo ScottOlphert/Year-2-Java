@@ -25,15 +25,16 @@ public class Add_Product extends JFrame implements ActionListener {
 	private ButtonGroup wineType;
 	private TitledBorder title;
 
-	private int productID = 10000;
+	private int productID;
 
 	private  HashMap<String, Product> item = new HashMap<String, Product> (50); // local #map created
 
 
-	public Add_Product(HashMap<String, Product> stockItems) // GUI constructor passing in stock #map from SWMenu
+	public Add_Product(HashMap<String, Product> stockItems, int ID) // GUI constructor passing in stock #map from SWMenu
 	{
 		item = stockItems; // set local # with contents of SWMenu #map
-
+		productID = ID;
+				
 		cn = getContentPane(); // create container
 		cn.setLayout(new GridBagLayout());
 		cn.setBackground(Color.decode("#8F0B23"));
@@ -238,7 +239,7 @@ public class Add_Product extends JFrame implements ActionListener {
 
 		if(e.getSource() == btnAdd)
 		{
-
+			add();
 		}
 
 	}
@@ -271,8 +272,10 @@ public class Add_Product extends JFrame implements ActionListener {
 		this.noSold = noSold;
 		this.stockLevel = stockLevel;
 		this.cost = cost;
-		this.sellingPrice = sellingPrice;*/
+	this.sellingPrice = sellingPrice;*/
 
+		try 
+		{
 		product.setProductID(Integer.toString(productID));
 		product.setName(name.getText());
 		product.setColour(colour);
@@ -284,6 +287,16 @@ public class Add_Product extends JFrame implements ActionListener {
 		product.setStockLevel(Integer.parseInt(units.getText()));
 
 		item.put(product.getProductID(), product);
+		productID ++;
+		}
+		catch(NumberFormatException numEx)
+		{
+			JOptionPane.showMessageDialog (null, "Cost, Stock and price must be a valid number");
+		}
+		catch (Validation valid)
+		{
+			JOptionPane.showMessageDialog (null, valid.toString());
+		}
 
 
 

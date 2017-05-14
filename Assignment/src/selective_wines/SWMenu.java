@@ -30,6 +30,8 @@ public class SWMenu extends JFrame implements ActionListener, MouseListener
 	private static HashMap<String, Product> stockItems = new HashMap<String, Product> (50); // HashMap to hold stock for easy access and updating.
 	private static LinkedList<Sales> sales = new LinkedList<Sales>();  // Linked list to hold the sales, more efficient for growing list of unknown size
 
+	private int pID = 10000;
+	
 	File Stock = new File("Stock"); // creating file for Read and write methods
 	File Sales = new File("Sales");
 
@@ -151,7 +153,7 @@ public class SWMenu extends JFrame implements ActionListener, MouseListener
 		//Menu option forms
 
 		// add product form.
-		add = new Add_Product(stockItems); // pass stock #map to add form
+		add = new Add_Product(stockItems, pID); // pass stock #map to add form
 		add.setTitle("Add Product");
 		add.setSize(500,600);
 		add.setLocation(100,100);
@@ -227,7 +229,7 @@ public class SWMenu extends JFrame implements ActionListener, MouseListener
 
 	}
 
-	public void ReadStock()
+	public void ReadStock() // read input stream for hashmap creation
 	{
 		try{
 			FileInputStream fis = new FileInputStream("Stock");
@@ -248,9 +250,18 @@ public class SWMenu extends JFrame implements ActionListener, MouseListener
 		{
 			JOptionPane.showMessageDialog(null, "Could not read from Stock.dat");
 		}
+		
+		Iterator i = stockItems.entrySet().iterator();
+		// Loop through the items 
+		
+		while (i.hasNext())
+		{
+			pID++; // increment the product ID
+			i.next(); // go to next item in map
+		}
 	}
 
-	public void ReadSales()
+	public void ReadSales() // read input stream for linked list creation
 	{
 		try{
 			FileInputStream fis = new FileInputStream("Sales");

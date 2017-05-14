@@ -3,7 +3,12 @@ package selective_wines;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -20,6 +25,7 @@ public class Display_Stock  extends JFrame implements ActionListener {
 	Font all = new Font("Arial", Font.BOLD,16); // Create a font to use as default 
 
 	private  HashMap<String, Product> item = new HashMap<String, Product> (50); // local #map created
+	File Report = new File("resource/Report.txt");
 
 	public Display_Stock(HashMap<String, Product> stockItems) // constructor initialising components of GUI and adding to container
 	{
@@ -126,15 +132,44 @@ public class Display_Stock  extends JFrame implements ActionListener {
 	private void display() //Method to print the Ordered List to the text area
 	{
 
-		String div = "\n-------------------------------------------------------------------------------------------------"
-				+ "-----------------------------------------------------------------------------------------------";
-
-		String s = String.format("      %-30s|%-40s|%-14s|%-13s|%-17s|%17s|%-15s|%-15s|%-17s|%s\n",
-				"Name","e-Mail Address", "Phone Number", "Member Type", "Membership years", "Application Date", "Loyalty Points","Priority Level", "Tickets Requested", div); //Create header for ordered list
-
+		try
+		{
+			stock.setText("");
+		
+		String s;
+		// Add a header
+		s="Student ID.   Forename             Surname             Subject        Result\n";
 		stock.append(s);
-		//s = list.display();
+		s="-----------------------------------------------------------------------------\n";
 		stock.append(s);
+		
+		// Create an instance of Iterator
+		
+		PrintWriter create = new PrintWriter(Report);
+		
+		create.println("Student List");
+		create.println("------------");
+		create.println("");
+		create.println("Student ID.   Forename             Surname             Subject        Result");
+		create.println("-----------------------------------------------------------------------------");
+	
+	
+		Iterator i = item.entrySet().iterator();
+		// Loop through the items (see notes)
+		
+		while (i.hasNext())
+		{
+			Map.Entry me = (Map.Entry)i.next();
+			
+			stock.append(me.getValue().toString());
+			create.println(me.getValue().toString());
+		}
+		create.close();
+		}
+		catch(FileNotFoundException fEx)
+		{
+			JOptionPane.showMessageDialog(null, "File not found");
+		}
 	}
 
 	private void reset() // method to reset the textArea 

@@ -51,7 +51,12 @@ public class Product implements Serializable
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws Validation 
+	{
+		if (name.length() < 7 || name.length()>30) // Validates name to between 7 - 30 Characters
+		{
+			throw new Validation("Name must be between 7 and 30 characters");
+		}
 		this.name = name;
 	}
 
@@ -99,7 +104,12 @@ public class Product implements Serializable
 		return stockLevel;
 	}
 
-	public void setStockLevel(int stockLevel) {
+	public void setStockLevel(int stockLevel)throws Validation 
+	{
+		if (stockLevel < 1 || stockLevel > 30 ) // Validates Stock so there is at least 1 and no more than 30 when product is added or updated
+		{
+			throw new Validation("Stock added must be between 1 & 30");
+		}
 		this.stockLevel = stockLevel;
 	}
 
@@ -107,7 +117,12 @@ public class Product implements Serializable
 		return cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(double cost) throws Validation 
+	{
+		if (cost < 5.00 || cost > 150.00 ) // Validates cost to make it between £5 and £150
+		{
+			throw new Validation("Cost must be between £5 & £150");
+		}
 		this.cost = cost;
 	}
 
@@ -115,7 +130,12 @@ public class Product implements Serializable
 		return sellingPrice;
 	}
 
-	public void setSellingPrice(double sellingPrice) {
+	public void setSellingPrice(double sellingPrice)throws Validation 
+	{
+		if (sellingPrice < 10.00 || sellingPrice > 300.00 ) // Validates sellingPrice to make it between £10 and £300
+		{
+			throw new Validation("Selling Price must be between £10 & £300");
+		}
 		this.sellingPrice = sellingPrice;
 	}
 
