@@ -7,7 +7,7 @@ public class Run {
 	public static void main(String[] args) 
 	{
 		SWMenu menu = new SWMenu();     
-		menu.setSize(600, 900);
+		menu.setSize(600, 600);
 		menu.setLocation(150,100);
 		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menu.setVisible(true);
