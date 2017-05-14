@@ -5,17 +5,17 @@ import java.io.*;
 public class Product implements Serializable
 {
 	
-	String productID, name, colour, reigon, country, grape;
-	int noSold, stockLevel;
+	String productID, name, colour, region, country, grape;
+	int noSold, stockLevel, count = 10000;
 	double cost, sellingPrice;
 	
-	public Product(String productID, String name, String colour, String reigon, String country, String grape,
+	public Product(String productID, String name, String colour, String region, String country, String grape,
 			int noSold, int stockLevel, double cost, double sellingPrice) 
 	{
 		this.productID = productID;
 		this.name = name;
 		this.colour = colour;
-		this.reigon = reigon;
+		this.region = region;
 		this.country = country;
 		this.grape = grape;
 		this.noSold = noSold;
@@ -26,17 +26,17 @@ public class Product implements Serializable
 	
 	public Product() 
 	{
-		super();
-		this.productID = "";
+		this.productID = Integer.toString(count);
 		this.name = "";
 		this.colour = "";
-		this.reigon = "";
+		this.region = "";
 		this.country = "";
 		this.grape = "";
 		this.noSold = 0;
 		this.stockLevel = 0;
 		this.cost = 0;
 		this.sellingPrice = 0;
+		count++;
 	}
 
 	public String getProductID() {
@@ -64,11 +64,11 @@ public class Product implements Serializable
 	}
 
 	public String getReigon() {
-		return reigon;
+		return region;
 	}
 
-	public void setReigon(String reigon) {
-		this.reigon = reigon;
+	public void setReigon(String region) {
+		this.region = region;
 	}
 
 	public String getCountry() {
@@ -121,7 +121,7 @@ public class Product implements Serializable
 
 	
 	public String toString() {
-		return "Product [productID=" + productID + ", name=" + name + ", colour=" + colour + ", reigon=" + reigon
+		return "Product [productID=" + productID + ", name=" + name + ", colour=" + colour + ", reigon=" + region
 				+ ", country=" + country + ", grape=" + grape + ", noSold=" + noSold + ", stockLevel=" + stockLevel
 				+ ", cost=" + cost + ", sellingPrice=" + sellingPrice + "]";
 	}
