@@ -136,15 +136,15 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		title.setTitleFont(new Font("Arial", Font.BOLD,16));
 		p5.setBorder(title); 
 		
-		country = new JComboBox();
+		country = new JComboBox(); // Combo box for selection of country
 		country.setFont(new Font("Arial", Font.PLAIN,14));
 		country.setBackground(Color.WHITE);
 		
-		region = new JComboBox();
+		region = new JComboBox(); // Combo box for selection of region
 		region.setFont(new Font("Arial", Font.PLAIN,14));
 		region.setBackground(Color.WHITE);
 		
-		grape = new JComboBox();
+		grape = new JComboBox(); // Combo box for selection of grape
 		grape.setFont(new Font("Arial", Font.PLAIN,14));
 		grape.setBackground(Color.WHITE);
 		
@@ -204,11 +204,12 @@ public class Add_Product extends JFrame implements ActionListener, MouseListener
 		addComp(p3,buf3,4,1,1,1,2,0);
 		addComp(p3,buf4,0,2,5,1,3,1);
 
-		addComp(cn,p1,0,0,1,1,1,1); // adding panels to the container
-		addComp(cn,p2,0,1,1,1,1,1);
-		addComp(cn,p8,0,2,1,1,1,1);
-		addComp(cn,p3,0,3,1,1,1,1);
-		addComp(cn,p4,0,4,1,1,1,3);
+		addComp(cn,p1,0,0,1,1,1,1); // adding panel 1 to the container Title
+		addComp(cn,p2,0,1,1,1,1,1);// adding panel 2 to the container product name, country, colour, cost etc
+		addComp(cn,p8,0,2,1,1,1,1); // adding panel 8 to container number of bottles in stock
+		addComp(cn,p3,0,3,1,1,1,1);// adding panel 3 to container buttons Add, exit reset
+		addComp(cn,p4,0,4,1,1,1,3); // panel to deal with resizing issues
+	
 	}
 
 
